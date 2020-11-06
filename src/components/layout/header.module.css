@@ -1,0 +1,8 @@
+.logout {
+  /* padding: 10px; */
+}
+
+.logout:hover {
+  color: #fff !important;
+  cursor: pointer;
+}
