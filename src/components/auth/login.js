@@ -21,8 +21,8 @@ const Login = () => {
     e.preventDefault();
     setError(null);
     Axios.post(process.env.REACT_APP_API_BASE_URL + "/api/user/login", {
-      U_email: email,
-      U_password: password,
+      email,
+      password,
     })
       .then((response) => {
         setTokens({

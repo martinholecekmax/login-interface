@@ -26,11 +26,11 @@ const Register = () => {
     e.preventDefault();
     setError(null);
     Axios.post(process.env.REACT_APP_API_BASE_URL + "/api/user/register", {
-      U_first_name: firstName,
-      U_last_name: lastName,
-      U_email: email,
-      U_password: password,
-      U_passwordConfirm: passwordConfirm,
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      password: password,
+      passwordConfirm: passwordConfirm,
     })
       .then((response) => {
         setTokens({
