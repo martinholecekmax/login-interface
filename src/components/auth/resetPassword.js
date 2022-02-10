@@ -1,36 +1,36 @@
-import React, { useContext, useState } from "react";
-import { AuthManagerContext } from "../../context/authManager";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import Axios from "axios";
 import { Alert } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-import styles from "./login.module.css";
+import styles from "./resetPassword.module.css";
 
-const Login = () => {
-  const { setTokens, setUser } = useContext(AuthManagerContext);
+const ResetPassword = ({ match }) => {
+  const token = match.params.token;
+  console.log("token", token);
 
   const history = useHistory();
-  const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
   const [error, setError] = useState();
 
   const submit = async (e) => {
     e.preventDefault();
     setError(null);
-    Axios.post(process.env.REACT_APP_API_BASE_URL + "/api/user/login", {
-      email,
-      password,
-    })
+    Axios.post(
+      process.env.REACT_APP_API_BASE_URL + "/api/user/password-reset",
+      {
+        confirm_password: confirmPassword,
+        token,
+        password,
+      }
+    )
       .then((response) => {
-        setTokens({
-          accessToken: response.data.accessToken,
-          refreshToken: response.data.refreshToken,
-        });
-        setUser(response.data.user);
-        history.push("/orders");
+        console.log("response", response);
+        history.push("/password-success-reset");
       })
       .catch((error) => {
         if (error.response.data.error) {
@@ -47,18 +47,9 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      <h1>Login</h1>
+      <h1 className={styles.title}>Reset Password</h1>
       {error ? <Alert variant="danger">{error}</Alert> : null}
       <Form onSubmit={submit}>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
-
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -69,7 +60,12 @@ const Login = () => {
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
-          <Link to="/password-send-reset">Forgot Password</Link>
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Confirm Password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
         </Form.Group>
 
         <Button variant="primary" type="submit">
@@ -80,4 +76,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ResetPassword;

@@ -1,7 +1,11 @@
 import React from "react";
 
 const Home = () => {
-  return <div>Welcome</div>;
+  return (
+    <div style={{ margin: "30px" }}>
+      <h1>Welcome</h1>
+    </div>
+  );
 };
 
 export default Home;

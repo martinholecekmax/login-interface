@@ -28,17 +28,18 @@ const Register = () => {
     Axios.post(process.env.REACT_APP_API_BASE_URL + "/api/user/register", {
       first_name: firstName,
       last_name: lastName,
-      email: email,
-      password: password,
-      passwordConfirm: passwordConfirm,
+      email,
+      password,
+      passwordConfirm,
     })
       .then((response) => {
+        console.log("response", response);
         setTokens({
           accessToken: response.data.accessToken,
           refreshToken: response.data.refreshToken,
         });
         setUser(response.data.user);
-        history.push("/login");
+        history.push("/");
       })
       .catch((error) => {
         if (error.response.data.error) {

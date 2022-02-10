@@ -4,23 +4,23 @@ import Axios from "axios";
 import moment from "moment";
 import { withRouter } from "react-router-dom";
 
-import styles from "./orders.module.css";
+import styles from "./quotes.module.css";
 
-const Orders = ({ history }) => {
+const Quotes = ({ history }) => {
   const { accessToken } = useContext(AuthManagerContext);
-  const [orders, setOrders] = useState([]);
+  const [quotes, setQuotes] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setError(false);
     setLoading(true);
-    Axios.get(process.env.REACT_APP_API_BASE_URL + "/api/orders", {
+    Axios.get(process.env.REACT_APP_API_BASE_URL + "/api/quotes", {
       headers: {
         Authorization: "Bearer " + accessToken,
       },
     })
       .then((response) => {
-        setOrders(response.data.orders);
+        setQuotes(response.data.quotes);
         setLoading(false);
       })
       .catch((error) => {
@@ -38,18 +38,18 @@ const Orders = ({ history }) => {
     return <div>There has been an error</div>;
   }
 
-  console.log("orders", orders);
+  console.log("quotes", quotes);
 
-  const all = orders.map((order, index) => {
-    let createDate = moment(order.CreateDate).format("Mo MMMM YYYY");
+  const all = quotes.map((quote, index) => {
+    let createDate = moment(quote.CreateDate).format("Mo MMMM YYYY");
     return (
       <tr key={index}>
-        <td>{order.DocEntry}</td>
-        <td>{order.CardName}</td>
+        <td>{quote.DocEntry}</td>
+        <td>{quote.CardName}</td>
         <td>{createDate}</td>
         <td>
           <button
-            onClick={() => history.push("/order/" + order.DocEntry)}
+            onClick={() => history.push("/quote/" + quote.DocEntry)}
             className="btn btn-primary"
           >
             Show
@@ -60,7 +60,7 @@ const Orders = ({ history }) => {
   });
   return (
     <div className={styles.container}>
-      <h1>Orders</h1>
+      <h1>Quote</h1>
       <table className={styles.table}>
         <thead>
           <tr>
@@ -76,4 +76,4 @@ const Orders = ({ history }) => {
   );
 };
 
-export default withRouter(Orders);
+export default withRouter(Quotes);

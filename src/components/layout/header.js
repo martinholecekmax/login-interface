@@ -17,6 +17,26 @@ const Header = () => {
         {authenticated ? (
           <ul className="navbar-nav justify-content-end">
             <li className="nav-item">
+              <NavLink className="nav-link" to="/orders">
+                Orders
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/quotes">
+                Quotes
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/profile">
+                Profile
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/password-change">
+                Change Password
+              </NavLink>
+            </li>
+            <li className="nav-item">
               <div className={`${styles.logout} nav-link`} onClick={logout}>
                 Logout
               </div>
